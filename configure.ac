@@ -1,9 +1,10 @@
-AC_PREREQ(2.59)	
+AC_PREREQ([2.71])
 AC_INIT([ucarp],[1.5.2])
 AC_CONFIG_SRCDIR([src/ucarp.c])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([1.9 dist-bzip2])
 AC_CONFIG_LIBOBJ_DIR(src)
+AC_CONFIG_MACRO_DIRS([m4])
 
 AC_SUBST(VERSION)
 
@@ -14,20 +15,19 @@ AC_SUBST(ISODATE)
 AC_PROG_CC
 AC_PROG_CC_C_O
 AC_PROG_CPP
-AC_USE_SYSTEM_EXTENSIONS 
+AC_USE_SYSTEM_EXTENSIONS
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_RANLIB
-AC_PROG_LIBTOOL
+LT_INIT
 
-AC_ISC_POSIX
+AC_SEARCH_LIBS([strerror],[cposix])
 
 AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION(0.17)
 
 # Checks for header files.
-AC_HEADER_STDC
-AC_HEADER_TIME
 AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS([memory.h strings.h unistd.h netinet/in_systm.h])
 AC_CHECK_HEADERS([netinet/in.h stdlib.h string.h sys/socket.h sys/time.h])
@@ -48,7 +48,6 @@ dnl Check for endianness
 AC_C_BIGENDIAN
 
 dnl Check for types
-AC_TYPE_SIGNAL
 AC_TYPE_PID_T
 AC_TYPE_SIZE_T
 AC_TYPE_SSIZE_T
@@ -184,7 +183,7 @@ else
   else
     CONFDIR="$sysconfdir"
   fi
-fi  
+fi
 
 if test -r /dev/arandom; then
   AC_MSG_NOTICE([You have /dev/arandom - Great])
@@ -217,7 +216,7 @@ AC_RUN_IFELSE([AC_LANG_SOURCE([[
 int main(void)
 {
     char buf[4];
-    
+
     (void) fprintf(fopen("conftestval", "w"), "%d\n",
         (int) snprintf(buf, sizeof buf, "12345678"));
     return 0;
@@ -243,12 +242,12 @@ int main(void)
 {
     SHA1_CTX ctx;
     char b[41];
-    
+
     SHA1Init(&ctx);
     SHA1Update(&ctx, (const unsigned char *) "test", 4U);
     SHA1End(&ctx, b);
     b[40] = 0;
-    
+
     return strcasecmp(b, "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3");
 }
 ]])],[

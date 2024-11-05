@@ -2,19 +2,10 @@
 #define __UCARP_H__ 1
 
 #include <stdio.h>
-#ifdef STDC_HEADERS
-# include <stdlib.h>
-# include <stddef.h>
-# include <stdarg.h>
-#else
-# ifdef HAVE_STDLIB_H
-#  include <stdlib.h>
-# endif
-#endif
+#include <stdlib.h>
+#include <stddef.h>
+#include <stdarg.h>
 #if HAVE_STRING_H
-# if !STDC_HEADERS && HAVE_MEMORY_H
-#  include <memory.h>
-# endif
 # include <string.h>
 #else
 # if HAVE_STRINGS_H
@@ -26,15 +17,10 @@
 #endif
 #include <limits.h>
 #include <errno.h>
-#if TIME_WITH_SYS_TIME
+#if HAVE_SYS_TIME_H
 # include <sys/time.h>
-# include <time.h>
 #else
-# if HAVE_SYS_TIME_H
-#  include <sys/time.h>
-# else
-#  include <time.h>
-# endif
+# include <time.h>
 #endif
 #include <signal.h>
 #include <sys/types.h>
