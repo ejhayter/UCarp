@@ -90,6 +90,7 @@ if test "$ac_cv_lib_nsl_gethostbyname" = "$ac_cv_func_gethostbyname" ; then
 fi
 
 # Checks for libraries.
+PKG_CHECK_MODULES(PCAP, [libpcap])
 AC_CHECK_LIB([pcap], [pcap_lookupdev])
 
 dnl Types - continued
